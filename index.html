@@ -321,8 +321,11 @@ function renderHome() {
 }
 
 function openModal(content, wide=false) {
-  modalRoot.innerHTML=`<div class="modal-backdrop" data-action="close-modal"><section class="modal ${wide?"wide":""}" role="dialog" aria-modal="true">${content}</section></div>`;
-  modalRoot.querySelector(".modal").addEventListener("click",e=>e.stopPropagation());
+  modalRoot.innerHTML=`<div class="modal-backdrop"><section class="modal ${wide?"wide":""}" role="dialog" aria-modal="true">${content}</section></div>`;
+  const backdrop=modalRoot.querySelector(".modal-backdrop");
+  backdrop.addEventListener("click",event=>{
+    if(event.target===backdrop) closeModal();
+  });
 }
 function closeModal(){ modalRoot.innerHTML=""; }
 function modalHead(title, sub="") { return `<div class="modal-head"><div><h2>${title}</h2>${sub?`<p>${sub}</p>`:""}</div><button class="icon-btn" data-action="close-modal" aria-label="關閉">✕</button></div>`; }
